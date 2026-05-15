@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+  postgres-py:
+    image: postgres:15
+    container_name: kairos-postgres-py
+    environment:
+      POSTGRES_DB: kairos_py
+      POSTGRES_USER: kairos
+      POSTGRES_PASSWORD: kairos
+    ports:
+      - "5433:5432"
+
+  backend-py:
+    build: .
+    container_name: kairos-backend-py
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres-py

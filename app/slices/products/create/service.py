@@ -1,10 +1,10 @@
 from app.models.product import Product
-
-fake_db = []
+from app.core.database import SessionLocal
 
 def create_product(data):
+    db = SessionLocal()
+
     product = Product(
-        id=len(fake_db) + 1,
         name=data.name,
         description=data.description,
         price=data.price,
@@ -12,5 +12,9 @@ def create_product(data):
         stock=data.stock
     )
 
-    fake_db.append(product)
+    db.add(product)
+    db.commit()
+    db.refresh(product)
+    db.close()
+
     return product

@@ -1,4 +1,11 @@
-from app.slices.products.create.service import fake_db
+from app.models.product import Product
+from app.core.database import SessionLocal
 
 def list_products():
-    return fake_db
+    db = SessionLocal()
+
+    products = db.query(Product).all()
+
+    db.close()
+
+    return products
